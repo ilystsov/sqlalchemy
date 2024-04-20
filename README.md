@@ -1,3 +1,4 @@
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/4NzADN_L)
 ## Базы данных
 ### Типы бд
 * Реляционные базы данных (**Relational databases**): Это самый распространенный тип баз данных, который использует реляционную модель данных. В реляционных базах данных данные организованы в виде таблиц, состоящих из строк (кортежей) и столбцов (атрибутов). Примеры реляционных баз данных включают MySQL, PostgreSQL, Oracle, Microsoft SQL Server.
