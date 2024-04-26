@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "2024-spring-ab-python-hw-7-quarriedstone-ilystsov"
+version = "0.1.0"
+description = ""
+authors = ["ilya <lystsov.ilya@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+sqlalchemy = "^2.0.29"
+fastapi = "^0.110.2"
+uvicorn = "^0.29.0"
+strawberry-graphql = "^0.221.1"
+pydantic = "^2.6.4"
+pydantic-settings = "^2.2.1"
+dependency-injector = "^4.41.0"
+alembic = "^1.13.1"
+psycopg2-binary = "^2.9.9"
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^7.0.0"
+black = "^24.4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

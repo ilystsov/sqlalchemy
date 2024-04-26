@@ -5,8 +5,8 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from seminar_materials.app.config import SCHEMA_NAME
-from seminar_materials.app.models.base import BaseModel
+from homework.app.infrastructure.config import SCHEMA_NAME
+from homework.app.infrastructure.models.base import BaseModel
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -23,7 +23,6 @@ if config.config_file_name is not None:
 # target_metadata = mymodel.Base.metadata
 target_metadata = BaseModel.metadata
 
-
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
@@ -34,7 +33,6 @@ def include_name(name, type_, _):
         return name in [SCHEMA_NAME]
     else:
         return True
-
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
