@@ -2,6 +2,7 @@ from sqlalchemy import ForeignKey
 from uuid import UUID
 from sqlalchemy.ext.associationproxy import AssociationProxy, association_proxy
 from sqlalchemy.orm import relationship, Mapped, mapped_column
+from sqlalchemy.orm.collections import attribute_keyed_dict
 
 from homework.app.infrastructure.models.base import BaseModel
 
@@ -18,12 +19,15 @@ class CartModel(BaseModel):
     __tablename__ = 'carts'
 
     id: Mapped[UUID] = mapped_column(primary_key=True)
-    cart_product_associations: Mapped[list['CartProductAssociationModel']] = relationship(back_populates='cart')
+    cart_product_associations: Mapped[dict[UUID, 'CartProductAssociationModel']] = relationship(
+        back_populates='cart',
+        collection_class=attribute_keyed_dict("product_id"),
+    )
 
-    products: AssociationProxy['list[ProductModel]'] = association_proxy(
+    products: AssociationProxy[dict[UUID, int]] = association_proxy(
         target_collection='cart_product_associations',
-        attr='product',
-        creator=lambda product_obj, quantity=1: CartProductAssociationModel(product=product_obj, quantity=quantity)
+        attr='quantity',
+        creator=lambda product_id, quantity: CartProductAssociationModel(product_id=product_id, quantity=quantity)
     )
 
 

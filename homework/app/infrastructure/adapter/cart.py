@@ -47,15 +47,8 @@ class CartAdapter(CartInterface):
             if product is None:
                 raise ProductNotFound("There is no product with the specified id.")
 
-            existing_association = next(
-                (cpa for cpa in cart.cart_product_associations if cpa.product_id == product_id), None
-            )
-            if existing_association is not None:
-                existing_association.quantity += 1
-            else:
-                cart.products.append(
-                    product
-                )  # association proxy позволяет добавить продукт в корзину настолько просто :)
+            # association proxy с коллекцией на основе словаря позволяет добавить продукт в корзину настолько просто :)
+            cart.products[product_id] = cart.products.get(product_id, 0) + 1
             session.commit()
             return self.get_cart_by_id(cart_id)
 
@@ -65,11 +58,13 @@ class CartAdapter(CartInterface):
             cart = session.get(CartModel, cart_id)
             if cart is None:
                 raise CartNotFound("There is no cart with the specified id.")
-            association = next((cp for cp in cart.cart_product_associations if cp.product_id == product_id), None)
-            if association is None:
+            if product_id not in cart.products:
                 raise ProductNotFound("Product not in cart.")
 
-            association.quantity = quantity
+            if quantity == 0:
+                del cart.products[product_id]
+            else:
+                cart.products[product_id] = quantity
             session.commit()
             return self.get_cart_by_id(cart_id)
 
@@ -81,6 +76,6 @@ class CartAdapter(CartInterface):
             if not cart:
                 raise CartNotFound("There is no cart with the specified id.")
             products_quantities = [
-                ProductQuantity(product=cp.product, quantity=cp.quantity) for cp in cart.cart_product_associations
+                ProductQuantity(product=cp.product, quantity=cp.quantity) for cp in cart.cart_product_associations.values()
             ]
             return Cart(id=str(cart.id), products=products_quantities)
