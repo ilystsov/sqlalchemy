@@ -1,5 +1,7 @@
 import uuid
 
+from sqlalchemy.orm import sessionmaker, Session
+
 from homework.app.domain.entities.cart import Cart
 from homework.app.domain.entities.product import ProductQuantity
 from homework.app.domain.services.interfaces.cart import CartInterface
@@ -12,7 +14,7 @@ class CartAdapter(CartInterface):
     Адаптер для работы с корзинами продуктов.
     """
 
-    def __init__(self, session_factory):
+    def __init__(self, session_factory: sessionmaker[Session]):
         self.session_factory = session_factory
 
     def create(self) -> "Cart":
