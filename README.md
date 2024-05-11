@@ -14,6 +14,16 @@
 ```python
 cart.products.append(product)
 ```
+А если представить поле `products` модели
+`CartModel` в виде `dict[product_id, quantity]`, используя
+[**Proxying to Dictionary Based Collections**](https://docs.sqlalchemy.org/en/20/orm/extensions/associationproxy.html#proxying-to-dictionary-based-collections),
+то будет еще более по **orm**-ному!
+Тогда, например, можно будет изменять количество продуктов в корзине вот так:
+```python
+cart.products[product_id] = quantity
+```
+Удобнее некуда:)
+
 ### Миграции с alembic
 
 
